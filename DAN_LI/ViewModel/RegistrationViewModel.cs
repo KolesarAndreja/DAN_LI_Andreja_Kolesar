@@ -178,11 +178,18 @@ namespace DAN_LI.ViewModel
 
             try
             {
-                if (viewDoctor == Visibility.Visible)
+                if (doctorList.Count == 0)
                 {
-                    viewDoctor = Visibility.Hidden;
+                    MessageBox.Show("It is impossible to register a patient at this time as there are no registered doctors");
                 }
-                viewPatient = Visibility.Visible;
+                else
+                {
+                    if (viewDoctor == Visibility.Visible)
+                    {
+                        viewDoctor = Visibility.Hidden;
+                    }
+                    viewPatient = Visibility.Visible;
+                }
             }
             catch (Exception ex)
             {
@@ -216,15 +223,16 @@ namespace DAN_LI.ViewModel
             try
             {
                 tblUser u = Service.Service.AddUser(newUser);
-                newPatient.userId = u.userId;
-                newPatient.doctorId = selectedDoctor.doctorId;
-                tblPatient p = Service.Service.AddPatient(newPatient);
+                    newPatient.userId = u.userId;
+                    newPatient.doctorId = selectedDoctor.doctorId;
+                    tblPatient p = Service.Service.AddPatient(newPatient);
 
-                if (u != null && p != null)
-                {
-                    MessageBox.Show("Patient has been registered.");
-                    registration.Close();
-                }
+                    if (u != null && p != null)
+                    {
+                        MessageBox.Show("Patient has been registered.");
+                        registration.Close();
+                    }
+                
             }
             catch (Exception ex)
             {

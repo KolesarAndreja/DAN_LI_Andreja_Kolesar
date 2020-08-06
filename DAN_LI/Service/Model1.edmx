@@ -1,0 +1,471 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="dbMedicalInstitutionModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblDoctor">
+          <Key>
+            <PropertyRef Name="doctorId" />
+          </Key>
+          <Property Name="doctorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="account" Type="varchar" MaxLength="20" />
+          <Property Name="userId" Type="int" />
+        </EntityType>
+        <EntityType Name="tblPatient">
+          <Key>
+            <PropertyRef Name="patientId" />
+          </Key>
+          <Property Name="patientId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cardNumber" Type="varchar" MaxLength="20" />
+          <Property Name="userId" Type="int" />
+          <Property Name="doctorId" Type="int" />
+        </EntityType>
+        <EntityType Name="tblSickLeaveRequirements">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="50" />
+          <Property Name="firm" Type="varchar" MaxLength="25" />
+          <Property Name="urgent" Type="bit" Nullable="false" />
+          <Property Name="patientId" Type="int" />
+        </EntityType>
+        <EntityType Name="tblUsers">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fullname" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="JMBG" Type="char" MaxLength="13" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'dbMedicalInstitution.dbo.vwDoctor' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwDoctor">
+          <Key>
+            <PropertyRef Name="userId" />
+            <PropertyRef Name="username" />
+            <PropertyRef Name="fullname" />
+            <PropertyRef Name="JMBG" />
+            <PropertyRef Name="doctorId" />
+          </Key>
+          <Property Name="userId" Type="int" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="fullname" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="JMBG" Type="char" MaxLength="13" Nullable="false" />
+          <Property Name="account" Type="varchar" MaxLength="20" />
+          <Property Name="doctorId" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'dbMedicalInstitution.dbo.vwPatient' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwPatient">
+          <Key>
+            <PropertyRef Name="userId" />
+            <PropertyRef Name="username" />
+            <PropertyRef Name="fullname" />
+            <PropertyRef Name="JMBG" />
+          </Key>
+          <Property Name="userId" Type="int" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="fullname" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="JMBG" Type="char" MaxLength="13" Nullable="false" />
+          <Property Name="cardNumber" Type="varchar" MaxLength="20" />
+          <Property Name="doctorId" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'dbMedicalInstitution.dbo.vwSickLeaveRequirements' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwSickLeaveRequirements">
+          <Key>
+            <PropertyRef Name="date" />
+            <PropertyRef Name="id" />
+            <PropertyRef Name="urgent" />
+          </Key>
+          <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="50" />
+          <Property Name="firm" Type="varchar" MaxLength="25" />
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="patientId" Type="int" />
+          <Property Name="urgent" Type="bit" Nullable="false" />
+          <Property Name="doctorId" Type="int" />
+        </EntityType>
+        <Association Name="FK__tblDoctor__userI__70DDC3D8">
+          <End Role="tblUsers" Type="Self.tblUsers" Multiplicity="0..1" />
+          <End Role="tblDoctor" Type="Self.tblDoctor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUsers">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="tblDoctor">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblPatien__docto__74AE54BC">
+          <End Role="tblDoctor" Type="Self.tblDoctor" Multiplicity="0..1" />
+          <End Role="tblPatient" Type="Self.tblPatient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblDoctor">
+              <PropertyRef Name="doctorId" />
+            </Principal>
+            <Dependent Role="tblPatient">
+              <PropertyRef Name="doctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblPatien__userI__73BA3083">
+          <End Role="tblUsers" Type="Self.tblUsers" Multiplicity="0..1" />
+          <End Role="tblPatient" Type="Self.tblPatient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUsers">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="tblPatient">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblSickLe__patie__778AC167">
+          <End Role="tblPatient" Type="Self.tblPatient" Multiplicity="0..1" />
+          <End Role="tblSickLeaveRequirements" Type="Self.tblSickLeaveRequirements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPatient">
+              <PropertyRef Name="patientId" />
+            </Principal>
+            <Dependent Role="tblSickLeaveRequirements">
+              <PropertyRef Name="patientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbMedicalInstitutionModelStoreContainer">
+          <EntitySet Name="tblDoctor" EntityType="Self.tblDoctor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPatient" EntityType="Self.tblPatient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSickLeaveRequirements" EntityType="Self.tblSickLeaveRequirements" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUsers" EntityType="Self.tblUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vwDoctor" EntityType="Self.vwDoctor" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwDoctor].[userId] AS [userId], 
+    [vwDoctor].[username] AS [username], 
+    [vwDoctor].[fullname] AS [fullname], 
+    [vwDoctor].[JMBG] AS [JMBG], 
+    [vwDoctor].[account] AS [account], 
+    [vwDoctor].[doctorId] AS [doctorId]
+    FROM [dbo].[vwDoctor] AS [vwDoctor]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwPatient" EntityType="Self.vwPatient" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwPatient].[userId] AS [userId], 
+    [vwPatient].[username] AS [username], 
+    [vwPatient].[fullname] AS [fullname], 
+    [vwPatient].[JMBG] AS [JMBG], 
+    [vwPatient].[cardNumber] AS [cardNumber], 
+    [vwPatient].[doctorId] AS [doctorId]
+    FROM [dbo].[vwPatient] AS [vwPatient]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwSickLeaveRequirements" EntityType="Self.vwSickLeaveRequirements" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwSickLeaveRequirements].[date] AS [date], 
+    [vwSickLeaveRequirements].[description] AS [description], 
+    [vwSickLeaveRequirements].[firm] AS [firm], 
+    [vwSickLeaveRequirements].[id] AS [id], 
+    [vwSickLeaveRequirements].[patientId] AS [patientId], 
+    [vwSickLeaveRequirements].[urgent] AS [urgent], 
+    [vwSickLeaveRequirements].[doctorId] AS [doctorId]
+    FROM [dbo].[vwSickLeaveRequirements] AS [vwSickLeaveRequirements]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__tblDoctor__userI__70DDC3D8" Association="Self.FK__tblDoctor__userI__70DDC3D8">
+            <End Role="tblUsers" EntitySet="tblUsers" />
+            <End Role="tblDoctor" EntitySet="tblDoctor" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblPatien__docto__74AE54BC" Association="Self.FK__tblPatien__docto__74AE54BC">
+            <End Role="tblDoctor" EntitySet="tblDoctor" />
+            <End Role="tblPatient" EntitySet="tblPatient" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblPatien__userI__73BA3083" Association="Self.FK__tblPatien__userI__73BA3083">
+            <End Role="tblUsers" EntitySet="tblUsers" />
+            <End Role="tblPatient" EntitySet="tblPatient" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblSickLe__patie__778AC167" Association="Self.FK__tblSickLe__patie__778AC167">
+            <End Role="tblPatient" EntitySet="tblPatient" />
+            <End Role="tblSickLeaveRequirements" EntitySet="tblSickLeaveRequirements" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dbMedicalInstitutionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblDoctor">
+          <Key>
+            <PropertyRef Name="doctorId" />
+          </Key>
+          <Property Name="doctorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="account" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="userId" Type="Int32" />
+          <NavigationProperty Name="tblUser" Relationship="Self.FK__tblDoctor__userI__70DDC3D8" FromRole="tblDoctor" ToRole="tblUsers" />
+          <NavigationProperty Name="tblPatients" Relationship="Self.FK__tblPatien__docto__74AE54BC" FromRole="tblDoctor" ToRole="tblPatient" />
+        </EntityType>
+        <EntityType Name="tblPatient">
+          <Key>
+            <PropertyRef Name="patientId" />
+          </Key>
+          <Property Name="patientId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cardNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="userId" Type="Int32" />
+          <Property Name="doctorId" Type="Int32" />
+          <NavigationProperty Name="tblDoctor" Relationship="Self.FK__tblPatien__docto__74AE54BC" FromRole="tblPatient" ToRole="tblDoctor" />
+          <NavigationProperty Name="tblUser" Relationship="Self.FK__tblPatien__userI__73BA3083" FromRole="tblPatient" ToRole="tblUsers" />
+          <NavigationProperty Name="tblSickLeaveRequirements" Relationship="Self.FK__tblSickLe__patie__778AC167" FromRole="tblPatient" ToRole="tblSickLeaveRequirements" />
+        </EntityType>
+        <EntityType Name="tblSickLeaveRequirement">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="firm" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="urgent" Type="Boolean" Nullable="false" />
+          <Property Name="patientId" Type="Int32" />
+          <NavigationProperty Name="tblPatient" Relationship="Self.FK__tblSickLe__patie__778AC167" FromRole="tblSickLeaveRequirements" ToRole="tblPatient" />
+        </EntityType>
+        <EntityType Name="tblUser">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fullname" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="JMBG" Type="String" MaxLength="13" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tblDoctors" Relationship="Self.FK__tblDoctor__userI__70DDC3D8" FromRole="tblUsers" ToRole="tblDoctor" />
+          <NavigationProperty Name="tblPatients" Relationship="Self.FK__tblPatien__userI__73BA3083" FromRole="tblUsers" ToRole="tblPatient" />
+        </EntityType>
+        <EntityType Name="vwDoctor">
+          <Key>
+            <PropertyRef Name="userId" />
+            <PropertyRef Name="username" />
+            <PropertyRef Name="fullname" />
+            <PropertyRef Name="JMBG" />
+            <PropertyRef Name="doctorId" />
+          </Key>
+          <Property Name="userId" Type="Int32" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fullname" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="JMBG" Type="String" MaxLength="13" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="account" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="doctorId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vwPatient">
+          <Key>
+            <PropertyRef Name="userId" />
+            <PropertyRef Name="username" />
+            <PropertyRef Name="fullname" />
+            <PropertyRef Name="JMBG" />
+          </Key>
+          <Property Name="userId" Type="Int32" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fullname" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="JMBG" Type="String" MaxLength="13" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="cardNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="doctorId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="vwSickLeaveRequirement">
+          <Key>
+            <PropertyRef Name="date" />
+            <PropertyRef Name="id" />
+            <PropertyRef Name="urgent" />
+          </Key>
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="firm" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="patientId" Type="Int32" />
+          <Property Name="urgent" Type="Boolean" Nullable="false" />
+          <Property Name="doctorId" Type="Int32" />
+        </EntityType>
+        <Association Name="FK__tblDoctor__userI__70DDC3D8">
+          <End Role="tblUsers" Type="Self.tblUser" Multiplicity="0..1" />
+          <End Role="tblDoctor" Type="Self.tblDoctor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUsers">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="tblDoctor">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblPatien__docto__74AE54BC">
+          <End Role="tblDoctor" Type="Self.tblDoctor" Multiplicity="0..1" />
+          <End Role="tblPatient" Type="Self.tblPatient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblDoctor">
+              <PropertyRef Name="doctorId" />
+            </Principal>
+            <Dependent Role="tblPatient">
+              <PropertyRef Name="doctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblPatien__userI__73BA3083">
+          <End Role="tblUsers" Type="Self.tblUser" Multiplicity="0..1" />
+          <End Role="tblPatient" Type="Self.tblPatient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUsers">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="tblPatient">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblSickLe__patie__778AC167">
+          <End Role="tblPatient" Type="Self.tblPatient" Multiplicity="0..1" />
+          <End Role="tblSickLeaveRequirements" Type="Self.tblSickLeaveRequirement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPatient">
+              <PropertyRef Name="patientId" />
+            </Principal>
+            <Dependent Role="tblSickLeaveRequirements">
+              <PropertyRef Name="patientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbMedicalInstitutionEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblDoctors" EntityType="Self.tblDoctor" />
+          <EntitySet Name="tblPatients" EntityType="Self.tblPatient" />
+          <EntitySet Name="tblSickLeaveRequirements" EntityType="Self.tblSickLeaveRequirement" />
+          <EntitySet Name="tblUsers" EntityType="Self.tblUser" />
+          <EntitySet Name="vwDoctors" EntityType="Self.vwDoctor" />
+          <EntitySet Name="vwPatients" EntityType="Self.vwPatient" />
+          <EntitySet Name="vwSickLeaveRequirements" EntityType="Self.vwSickLeaveRequirement" />
+          <AssociationSet Name="FK__tblDoctor__userI__70DDC3D8" Association="Self.FK__tblDoctor__userI__70DDC3D8">
+            <End Role="tblUsers" EntitySet="tblUsers" />
+            <End Role="tblDoctor" EntitySet="tblDoctors" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblPatien__docto__74AE54BC" Association="Self.FK__tblPatien__docto__74AE54BC">
+            <End Role="tblDoctor" EntitySet="tblDoctors" />
+            <End Role="tblPatient" EntitySet="tblPatients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblPatien__userI__73BA3083" Association="Self.FK__tblPatien__userI__73BA3083">
+            <End Role="tblUsers" EntitySet="tblUsers" />
+            <End Role="tblPatient" EntitySet="tblPatients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblSickLe__patie__778AC167" Association="Self.FK__tblSickLe__patie__778AC167">
+            <End Role="tblPatient" EntitySet="tblPatients" />
+            <End Role="tblSickLeaveRequirements" EntitySet="tblSickLeaveRequirements" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dbMedicalInstitutionModelStoreContainer" CdmEntityContainer="dbMedicalInstitutionEntities">
+          <EntitySetMapping Name="tblDoctors">
+            <EntityTypeMapping TypeName="dbMedicalInstitutionModel.tblDoctor">
+              <MappingFragment StoreEntitySet="tblDoctor">
+                <ScalarProperty Name="doctorId" ColumnName="doctorId" />
+                <ScalarProperty Name="account" ColumnName="account" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPatients">
+            <EntityTypeMapping TypeName="dbMedicalInstitutionModel.tblPatient">
+              <MappingFragment StoreEntitySet="tblPatient">
+                <ScalarProperty Name="patientId" ColumnName="patientId" />
+                <ScalarProperty Name="cardNumber" ColumnName="cardNumber" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="doctorId" ColumnName="doctorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSickLeaveRequirements">
+            <EntityTypeMapping TypeName="dbMedicalInstitutionModel.tblSickLeaveRequirement">
+              <MappingFragment StoreEntitySet="tblSickLeaveRequirements">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="firm" ColumnName="firm" />
+                <ScalarProperty Name="urgent" ColumnName="urgent" />
+                <ScalarProperty Name="patientId" ColumnName="patientId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUsers">
+            <EntityTypeMapping TypeName="dbMedicalInstitutionModel.tblUser">
+              <MappingFragment StoreEntitySet="tblUsers">
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="fullname" ColumnName="fullname" />
+                <ScalarProperty Name="JMBG" ColumnName="JMBG" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwDoctors">
+            <EntityTypeMapping TypeName="dbMedicalInstitutionModel.vwDoctor">
+              <MappingFragment StoreEntitySet="vwDoctor">
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="fullname" ColumnName="fullname" />
+                <ScalarProperty Name="JMBG" ColumnName="JMBG" />
+                <ScalarProperty Name="account" ColumnName="account" />
+                <ScalarProperty Name="doctorId" ColumnName="doctorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwPatients">
+            <EntityTypeMapping TypeName="dbMedicalInstitutionModel.vwPatient">
+              <MappingFragment StoreEntitySet="vwPatient">
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="fullname" ColumnName="fullname" />
+                <ScalarProperty Name="JMBG" ColumnName="JMBG" />
+                <ScalarProperty Name="cardNumber" ColumnName="cardNumber" />
+                <ScalarProperty Name="doctorId" ColumnName="doctorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwSickLeaveRequirements">
+            <EntityTypeMapping TypeName="dbMedicalInstitutionModel.vwSickLeaveRequirement">
+              <MappingFragment StoreEntitySet="vwSickLeaveRequirements">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="firm" ColumnName="firm" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="patientId" ColumnName="patientId" />
+                <ScalarProperty Name="urgent" ColumnName="urgent" />
+                <ScalarProperty Name="doctorId" ColumnName="doctorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

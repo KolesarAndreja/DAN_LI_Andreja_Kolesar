@@ -1,0 +1,280 @@
+﻿<Window x:Class="DAN_LI.View.Registration"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Validation="clr-namespace:DAN_LI.Validation"
+        xmlns:local="clr-namespace:DAN_LI.View"
+        mc:Ignorable="d"
+        Title="Registration" Height="600" Width="800">
+    <Grid>
+        <Button Content="Close"
+                Command="{Binding logOut, UpdateSourceTrigger=PropertyChanged}"
+                HorizontalAlignment="Left"
+                Height="25"
+                Margin="620,23,0,0"
+                VerticalAlignment="Top"
+                Width="125" />
+        <Button Content="Patient Registration"
+                Command="{Binding createPatient, UpdateSourceTrigger=PropertyChanged}"
+                HorizontalAlignment="Left"
+                Height="25"
+                Margin="40,23,0,0"
+                VerticalAlignment="Top"
+                Width="130" />
+        <Button Content="Doctor Registration"
+                Command="{Binding createDoctor, UpdateSourceTrigger=PropertyChanged}"
+                HorizontalAlignment="Left"
+                Height="25"
+                Margin="325,23,0,0"
+                VerticalAlignment="Top"
+                Width="121" />
+        <Grid Name="patientGrid"
+              Visibility="{Binding viewPatient, UpdateSourceTrigger=PropertyChanged}">
+            <Label Content="Fullname:"
+                   HorizontalAlignment="Left"
+                   Height="25"
+                   Margin="30,80,0,0"
+                   VerticalAlignment="Top"
+                   Width="90" />
+            <TextBox x:Name="txtFullname"
+                     Text="{Binding newUser.fullname, UpdateSourceTrigger=PropertyChanged}"
+                     HorizontalAlignment="Left"
+                     Height="23"
+                     Margin="120,82,0,0"
+                     TextWrapping="Wrap"
+                     VerticalAlignment="Top"
+                     Width="195" />
+            <Label Content="JMBG:"
+                   HorizontalAlignment="Left"
+                   Height="25"
+                   Margin="30,120,0,0"
+                   VerticalAlignment="Top"
+                   Width="90" />
+            <TextBox x:Name="txtLastname"
+                     Validation.ErrorTemplate="{StaticResource textBoxErrorTemplate}"
+                     HorizontalAlignment="Left"
+                     Height="23"
+                     Margin="120,120,0,0"
+                     TextWrapping="Wrap"
+                     VerticalAlignment="Top"
+                     Width="195">
+                <TextBox.Text>
+                    <Binding Path="newUser.JMBG"
+                             UpdateSourceTrigger="PropertyChanged"
+                             ValidatesOnDataErrors="True"
+                             NotifyOnValidationError="True">
+                        <Binding.ValidationRules>
+                            <Validation:ValidJmbg/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+                
+            </TextBox>
+            <Label Content="Insurance card:"
+                   HorizontalAlignment="Left"
+                   Height="25"
+                   Margin="30,160,0,0"
+                   VerticalAlignment="Top"
+                   Width="90" />
+            <TextBox x:Name="txtDateOfBirth"
+                     Validation.ErrorTemplate="{StaticResource textBoxErrorTemplate}"
+                     HorizontalAlignment="Left"
+                     Height="23"
+                     Margin="120,160,0,0"
+                     TextWrapping="Wrap"
+                     VerticalAlignment="Top"
+                     Width="195">
+                <TextBox.Text>
+                    <Binding Path="newPatient.cardNumber"
+                             UpdateSourceTrigger="PropertyChanged"
+                             ValidatesOnDataErrors="True"
+                             NotifyOnValidationError="True">
+                        <Binding.ValidationRules>
+                            <Validation:ValidCardNumbdr />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <Label Content="Username:"
+                   HorizontalAlignment="Left"
+                   Height="25"
+                   Margin="30,200,0,0"
+                   VerticalAlignment="Top"
+                   Width="90" />
+            <TextBox 
+                      Validation.ErrorTemplate="{StaticResource textBoxErrorTemplate}"
+                      Name="txtJm"
+                      HorizontalAlignment="Left"
+                      Height="23"
+                      Margin="120,200,0,0"
+                      TextWrapping="Wrap"
+                      VerticalAlignment="Top"
+                      Width="195">
+                <TextBox.Text>
+                    <Binding Path="newUser.username"
+                             UpdateSourceTrigger="PropertyChanged"
+                             ValidatesOnDataErrors="True"
+                             NotifyOnValidationError="True">
+                        <Binding.ValidationRules>
+                            <Validation:ValidUsername />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <Label Content="Password:"
+                   HorizontalAlignment="Left"
+                   Height="25"
+                   Margin="30,243,0,0"
+                   VerticalAlignment="Top"
+                   Width="90" />
+            <TextBox x:Name="txtMail"
+                     Text="{Binding newUser.password, UpdateSourceTrigger=PropertyChanged}"
+                     HorizontalAlignment="Left"
+                     Height="23"
+                     Margin="120,243,0,0"
+                     TextWrapping="Wrap"
+                     VerticalAlignment="Top"
+                     Width="195" />
+            <Label Content="Doctor:"
+                   HorizontalAlignment="Left"
+                   Height="25"
+                   Margin="30,285,0,0"
+                   VerticalAlignment="Top"
+                   Width="80" />
+            <ComboBox HorizontalAlignment="Left"
+                      DisplayMemberPath="fullname"
+                      IsEditable="True"
+                      ItemsSource="{Binding doctorList, UpdateSourceTrigger=PropertyChanged}"
+                      SelectedItem="{Binding selectedDoctor, UpdateSourceTrigger=PropertyChanged}"
+                      Height="25"
+                      Margin="120,285,0,0"
+                      VerticalAlignment="Top"
+                      Width="195" />
+            <Button Content="Save"
+                    Command="{Binding save1, UpdateSourceTrigger=PropertyChanged}"
+                    HorizontalAlignment="Left"
+                    Height="25"
+                    Margin="145,335,0,0"
+                    VerticalAlignment="Top"
+                    Width="140" />
+        </Grid>
+        <Grid Name="doctorGrid"
+              Visibility="{Binding viewDoctor, UpdateSourceTrigger=PropertyChanged}">
+            <Label Content="Fullname:"
+                   HorizontalAlignment="Left"
+                   Height="25"
+                   Margin="385,82,0,0"
+                   VerticalAlignment="Top"
+                   Width="90"
+                   RenderTransformOrigin="-1,0.52" />
+            <TextBox x:Name="txtFirstname_Copy"
+                     Text="{Binding newUser.fullname, UpdateSourceTrigger=PropertyChanged}"
+                     HorizontalAlignment="Left"
+                     Height="23"
+                     Margin="480,82,0,0"
+                     TextWrapping="Wrap"
+                     VerticalAlignment="Top"
+                     Width="195" />
+            <Label Content="JMBG:"
+                   HorizontalAlignment="Left"
+                   Height="25"
+                   Margin="400,120,0,0"
+                   VerticalAlignment="Top"
+                   Width="75" />
+            <TextBox x:Name="txtLastname_Copy"
+                     Validation.ErrorTemplate="{StaticResource textBoxErrorTemplate}"
+                     HorizontalAlignment="Left"
+                     Height="23"
+                     Margin="480,120,0,0"
+                     TextWrapping="Wrap"
+                     VerticalAlignment="Top"
+                     Width="195">
+                <TextBox.Text>
+                    <Binding Path="newUser.JMBG"
+                             UpdateSourceTrigger="PropertyChanged"
+                             ValidatesOnDataErrors="True"
+                             NotifyOnValidationError="True">
+                        <Binding.ValidationRules>
+                            <Validation:ValidJmbg />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <Label Content="Account number:"
+                   HorizontalAlignment="Left"
+                   Height="25"
+                   Margin="370,158,0,0"
+                   VerticalAlignment="Top"
+                   Width="105" />
+            <TextBox x:Name="txtLastname_Copy1"
+                     Validation.ErrorTemplate="{StaticResource textBoxErrorTemplate}"
+                     HorizontalAlignment="Left"
+                     Height="23"
+                     Margin="480,158,0,0"
+                     TextWrapping="Wrap"
+                     VerticalAlignment="Top"
+                     Width="195">
+                <TextBox.Text>
+                    <Binding Path="newDoctor.account"
+                             UpdateSourceTrigger="PropertyChanged"
+                             ValidatesOnDataErrors="True"
+                             NotifyOnValidationError="True">
+                        <Binding.ValidationRules>
+                            <Validation:ValidAccount />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <Label Content="Username:"
+                   HorizontalAlignment="Left"
+                   Height="25"
+                   Margin="385,198,0,0"
+                   VerticalAlignment="Top"
+                   Width="90"
+                   RenderTransformOrigin="-0.667,0.24" />
+            <TextBox  
+                      Validation.ErrorTemplate="{StaticResource textBoxErrorTemplate}"
+                      x:Name="txtJm_Copy"
+                      HorizontalAlignment="Left"
+                      Height="23"
+                      Margin="480,198,0,0"
+                      TextWrapping="Wrap"
+                      VerticalAlignment="Top"
+                      Width="195">
+                <TextBox.Text>
+                    <Binding Path="newUser.username"
+                             UpdateSourceTrigger="PropertyChanged"
+                             ValidatesOnDataErrors="True"
+                             NotifyOnValidationError="True">
+                        <Binding.ValidationRules>
+                            <Validation:ValidUsername />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <Label Content="Password:"
+                   HorizontalAlignment="Left"
+                   Height="25"
+                   Margin="385,240,0,0"
+                   VerticalAlignment="Top"
+                   Width="90" />
+            <TextBox x:Name="txtMail_Copy"
+                     Text="{Binding newUser.password, UpdateSourceTrigger=PropertyChanged}"
+                     HorizontalAlignment="Left"
+                     Height="23"
+                     Margin="480,240,0,0"
+                     TextWrapping="Wrap"
+                     VerticalAlignment="Top"
+                     Width="195"
+                     />
+            <Button Content="Save"
+                    Command="{Binding save2, UpdateSourceTrigger=PropertyChanged}"
+                    HorizontalAlignment="Left"
+                    Height="25"
+                    Margin="510,295,0,0"
+                    VerticalAlignment="Top"
+                    Width="140" />
+        </Grid>
+    </Grid>
+</Window>

@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace DAN_LI.ViewModel
 {
-    class RegistrationViewModel:ViewModelBase
+    class RegistrationViewModel : ViewModelBase
     {
         #region Prop
         Registration registration;
@@ -70,8 +70,8 @@ namespace DAN_LI.ViewModel
 
 
 
-        private tblDoctor _selectedDoctor;
-        public tblDoctor selectedDoctor
+        private vwDoctor _selectedDoctor;
+        public vwDoctor selectedDoctor
         {
             get
             {
@@ -92,7 +92,7 @@ namespace DAN_LI.ViewModel
             newUser = new tblUser();
             newDoctor = new tblDoctor();
             newPatient = new tblPatient();
-            selectedDoctor = new tblDoctor();
+            selectedDoctor = new vwDoctor();
             doctorList = Service.Service.GetDoctorsList();
         }
         #endregion
@@ -215,16 +215,16 @@ namespace DAN_LI.ViewModel
         {
             try
             {
+                tblUser u = Service.Service.AddUser(newUser);
+                newPatient.userId = u.userId;
+                newPatient.doctorId = selectedDoctor.doctorId;
+                tblPatient p = Service.Service.AddPatient(newPatient);
 
-                //tblUser e = Service.Service.AddUser(newUser);
-                //newDoctor.userId = e.userId;
-                //newDoctor.qualificationId = qualification.id;
-                //tblManager me = Service.Service.AddManager(newDoctor);
-
-                //if (e != null && me != null)
-                //{
-                //    MessageBox.Show("Manager has been succesfully created!");
-                //}
+                if (u != null && p != null)
+                {
+                    MessageBox.Show("Patient has been registered.");
+                    registration.Close();
+                }
             }
             catch (Exception ex)
             {
@@ -262,20 +262,15 @@ namespace DAN_LI.ViewModel
         {
             try
             {
-                //tblUser e = Service.Service.AddUser(newUser);
-                //newPatient.userId = e.userId;
-                //newPatient.genderId = gender.id;
-                //newPatient.engegamentId = engagement.id;
-                //tblStaff me = Service.Service.AddStaff(newPatient);
+                tblUser u = Service.Service.AddUser(newUser);
+                newDoctor.userId = u.userId;
+                tblDoctor p = Service.Service.AddDoctor(newDoctor);
 
-                //if (e != null && me != null)
-                //{
-                //    MessageBox.Show("Staff has been succesfully created!");
-                //}
-                //else
-                //{
-                //    MessageBox.Show("Error. Try again.");
-                //}
+                if (u != null && p != null)
+                {
+                    MessageBox.Show("Doctor has been registered.");
+                    registration.Close();
+                }
             }
             catch (Exception ex)
             {
@@ -285,15 +280,15 @@ namespace DAN_LI.ViewModel
 
         private bool CanSave2Execute()
         {
-        //    if (Service.Service.IsValidUser(newUser.username, newUser.password) == null && !String.IsNullOrEmpty(newUser.fullname) && !String.IsNullOrEmpty(newUser.email) && !String.IsNullOrEmpty(newUser.username) && !String.IsNullOrEmpty(newUser.password))
-        //    {
-        //        return true;
-        //    }
-        //    else
-        //    {
-        //        return false;
-        //    }
-        return true;
+            //    if (Service.Service.IsValidUser(newUser.username, newUser.password) == null && !String.IsNullOrEmpty(newUser.fullname) && !String.IsNullOrEmpty(newUser.email) && !String.IsNullOrEmpty(newUser.username) && !String.IsNullOrEmpty(newUser.password))
+            //    {
+            //        return true;
+            //    }
+            //    else
+            //    {
+            //        return false;
+            //    }
+            return true;
         }
         private ICommand _logOut;
         public ICommand logOut
@@ -328,5 +323,4 @@ namespace DAN_LI.ViewModel
         }
         #endregion
     }
-}
 }

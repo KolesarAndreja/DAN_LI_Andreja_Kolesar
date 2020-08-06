@@ -234,15 +234,14 @@ namespace DAN_LI.ViewModel
 
         private bool CanSaveExecute()
         {
-            //if (Service.Service.IsValidUser(newUser.username, newUser.password) == null && !String.IsNullOrEmpty(newUser.fullname) && !String.IsNullOrEmpty(newUser.email) && !String.IsNullOrEmpty(newUser.username) && !String.IsNullOrEmpty(newUser.password))
-            //{
-            //    return true;
-            //}
-            //else
-            //{
-            //    return false;
-            //}
-            return true;
+            if (!String.IsNullOrEmpty(newUser.fullname) && !String.IsNullOrEmpty(newUser.JMBG) && !String.IsNullOrEmpty(newUser.username) && !String.IsNullOrEmpty(newUser.password) && !String.IsNullOrEmpty(newPatient.cardNumber)&& selectedDoctor.doctorId!=0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private ICommand _save2;
@@ -280,15 +279,14 @@ namespace DAN_LI.ViewModel
 
         private bool CanSave2Execute()
         {
-            //    if (Service.Service.IsValidUser(newUser.username, newUser.password) == null && !String.IsNullOrEmpty(newUser.fullname) && !String.IsNullOrEmpty(newUser.email) && !String.IsNullOrEmpty(newUser.username) && !String.IsNullOrEmpty(newUser.password))
-            //    {
-            //        return true;
-            //    }
-            //    else
-            //    {
-            //        return false;
-            //    }
-            return true;
+            if (!String.IsNullOrEmpty(newUser.fullname) && !String.IsNullOrEmpty(newUser.JMBG) && !String.IsNullOrEmpty(newUser.username) && !String.IsNullOrEmpty(newUser.password) && !String.IsNullOrEmpty(newDoctor.account))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         private ICommand _logOut;
         public ICommand logOut

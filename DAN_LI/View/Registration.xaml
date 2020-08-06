@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Validation="clr-namespace:DAN_LI.Validation"
         xmlns:local="clr-namespace:DAN_LI.View"
         mc:Ignorable="d"
         Title="Registration" Height="600" Width="800">
@@ -51,13 +52,25 @@
                    VerticalAlignment="Top"
                    Width="90" />
             <TextBox x:Name="txtLastname"
-                     Text="{Binding newUser.JMBG, UpdateSourceTrigger=PropertyChanged}"
+                     Validation.ErrorTemplate="{StaticResource textBoxErrorTemplate}"
                      HorizontalAlignment="Left"
                      Height="23"
                      Margin="120,120,0,0"
                      TextWrapping="Wrap"
                      VerticalAlignment="Top"
-                     Width="195" />
+                     Width="195">
+                <TextBox.Text>
+                    <Binding Path="newUser.JMBG"
+                             UpdateSourceTrigger="PropertyChanged"
+                             ValidatesOnDataErrors="True"
+                             NotifyOnValidationError="True">
+                        <Binding.ValidationRules>
+                            <Validation:ValidJmbg/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+                
+            </TextBox>
             <Label Content="Insurance card:"
                    HorizontalAlignment="Left"
                    Height="25"
@@ -65,27 +78,50 @@
                    VerticalAlignment="Top"
                    Width="90" />
             <TextBox x:Name="txtDateOfBirth"
-                     Text="{Binding newPatient.cardNumber, UpdateSourceTrigger=PropertyChanged}"
+                     Validation.ErrorTemplate="{StaticResource textBoxErrorTemplate}"
                      HorizontalAlignment="Left"
                      Height="23"
                      Margin="120,160,0,0"
                      TextWrapping="Wrap"
                      VerticalAlignment="Top"
-                     Width="195" />
+                     Width="195">
+                <TextBox.Text>
+                    <Binding Path="newPatient.cardNumber"
+                             UpdateSourceTrigger="PropertyChanged"
+                             ValidatesOnDataErrors="True"
+                             NotifyOnValidationError="True">
+                        <Binding.ValidationRules>
+                            <Validation:ValidCardNumbdr />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
             <Label Content="Username:"
                    HorizontalAlignment="Left"
                    Height="25"
                    Margin="30,200,0,0"
                    VerticalAlignment="Top"
                    Width="90" />
-            <TextBox  Text="{Binding newUser.username, UpdateSourceTrigger=PropertyChanged}"
+            <TextBox 
+                      Validation.ErrorTemplate="{StaticResource textBoxErrorTemplate}"
                       Name="txtJm"
                       HorizontalAlignment="Left"
                       Height="23"
                       Margin="120,200,0,0"
                       TextWrapping="Wrap"
                       VerticalAlignment="Top"
-                      Width="195" />
+                      Width="195">
+                <TextBox.Text>
+                    <Binding Path="newUser.username"
+                             UpdateSourceTrigger="PropertyChanged"
+                             ValidatesOnDataErrors="True"
+                             NotifyOnValidationError="True">
+                        <Binding.ValidationRules>
+                            <Validation:ValidUsername />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
             <Label Content="Password:"
                    HorizontalAlignment="Left"
                    Height="25"
@@ -147,13 +183,24 @@
                    VerticalAlignment="Top"
                    Width="75" />
             <TextBox x:Name="txtLastname_Copy"
-                     Text="{Binding newUser.JMBG, UpdateSourceTrigger=PropertyChanged}"
+                     Validation.ErrorTemplate="{StaticResource textBoxErrorTemplate}"
                      HorizontalAlignment="Left"
                      Height="23"
                      Margin="480,120,0,0"
                      TextWrapping="Wrap"
                      VerticalAlignment="Top"
-                     Width="195" />
+                     Width="195">
+                <TextBox.Text>
+                    <Binding Path="newUser.JMBG"
+                             UpdateSourceTrigger="PropertyChanged"
+                             ValidatesOnDataErrors="True"
+                             NotifyOnValidationError="True">
+                        <Binding.ValidationRules>
+                            <Validation:ValidJmbg />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
             <Label Content="Account number:"
                    HorizontalAlignment="Left"
                    Height="25"
@@ -161,13 +208,24 @@
                    VerticalAlignment="Top"
                    Width="105" />
             <TextBox x:Name="txtLastname_Copy1"
-                     Text="{Binding newDoctor.account, UpdateSourceTrigger=PropertyChanged}"
+                     Validation.ErrorTemplate="{StaticResource textBoxErrorTemplate}"
                      HorizontalAlignment="Left"
                      Height="23"
                      Margin="480,158,0,0"
                      TextWrapping="Wrap"
                      VerticalAlignment="Top"
-                     Width="195" />
+                     Width="195">
+                <TextBox.Text>
+                    <Binding Path="newDoctor.account"
+                             UpdateSourceTrigger="PropertyChanged"
+                             ValidatesOnDataErrors="True"
+                             NotifyOnValidationError="True">
+                        <Binding.ValidationRules>
+                            <Validation:ValidAccount />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
             <Label Content="Username:"
                    HorizontalAlignment="Left"
                    Height="25"
@@ -175,14 +233,26 @@
                    VerticalAlignment="Top"
                    Width="90"
                    RenderTransformOrigin="-0.667,0.24" />
-            <TextBox  Text="{Binding newUser.username, UpdateSourceTrigger=PropertyChanged}"
+            <TextBox  
+                      Validation.ErrorTemplate="{StaticResource textBoxErrorTemplate}"
                       x:Name="txtJm_Copy"
                       HorizontalAlignment="Left"
                       Height="23"
                       Margin="480,198,0,0"
                       TextWrapping="Wrap"
                       VerticalAlignment="Top"
-                      Width="195" />
+                      Width="195">
+                <TextBox.Text>
+                    <Binding Path="newUser.username"
+                             UpdateSourceTrigger="PropertyChanged"
+                             ValidatesOnDataErrors="True"
+                             NotifyOnValidationError="True">
+                        <Binding.ValidationRules>
+                            <Validation:ValidUsername />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
             <Label Content="Password:"
                    HorizontalAlignment="Left"
                    Height="25"

@@ -141,7 +141,6 @@ namespace DAN_LI.Service
         }
         #endregion
 
-
         #region ADD PATIENT
         public static tblPatient AddPatient(tblPatient patient)
         {
@@ -168,6 +167,76 @@ namespace DAN_LI.Service
             {
                 System.Diagnostics.Debug.WriteLine("Exception: " + ex.Message.ToString());
                 return null;
+            }
+        }
+        #endregion
+
+        #region VALIDATION
+        public static bool UsedJmbg(string jmbg)
+        {
+            try
+            {
+                using (dbMedicalInstitutionEntities context = new dbMedicalInstitutionEntities())
+                {
+                    bool b = (from x in context.tblUsers where x.JMBG == jmbg select x).Any();
+                    return b;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Exception " + ex.Message.ToString());
+                return true;
+            }
+        }
+
+        public static bool UsedUsername(string username)
+        {
+            try
+            {
+                using (dbMedicalInstitutionEntities context = new dbMedicalInstitutionEntities())
+                {
+                    bool b = (from x in context.tblUsers where x.username == username select x).Any();
+                    return b;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Exception " + ex.Message.ToString());
+                return true;
+            }
+        }
+
+        public static bool UsedAccount(string account)
+        {
+            try
+            {
+                using (dbMedicalInstitutionEntities context = new dbMedicalInstitutionEntities())
+                {
+                    bool b = (from x in context.tblDoctors where x.account == account select x).Any();
+                    return b;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Exception " + ex.Message.ToString());
+                return true;
+            }
+        }
+
+        public static bool UsedCardNumber(string number)
+        {
+            try
+            {
+                using (dbMedicalInstitutionEntities context = new dbMedicalInstitutionEntities())
+                {
+                    bool b = (from x in context.tblPatients where x.cardNumber == number select x).Any();
+                    return b;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Exception " + ex.Message.ToString());
+                return true;
             }
         }
         #endregion

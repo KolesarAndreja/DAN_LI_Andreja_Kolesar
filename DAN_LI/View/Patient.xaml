@@ -5,8 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DAN_LI.View"
         mc:Ignorable="d"
-        Title="Patient" Height="450" Width="800">
+        Title="Patient"
+        Height="450"
+        Width="800">
     <Grid>
-        
+        <Button Content="Sick Leave Requirement"
+                Command="{Binding requirement, UpdateSourceTrigger=PropertyChanged}"
+                HorizontalAlignment="Left"
+                Margin="80,60,0,0"
+                VerticalAlignment="Top"
+                Width="155" />
+        <Button Content="Log Out"
+                Command="{Binding logOut, UpdateSourceTrigger=PropertyChanged}"
+                HorizontalAlignment="Left"
+                Height="20"
+                Margin="590,60,0,0"
+                VerticalAlignment="Top"
+                Width="155" />
     </Grid>
 </Window>

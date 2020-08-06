@@ -50,13 +50,15 @@ namespace DAN_LI.ViewModel
 
         private void LoginExecute(object obj)
         {
-            currentUser.password = (obj as PasswordBox).Password;
+            
             try
             {
+                currentUser.password = (obj as PasswordBox).Password;
                 currentUser = Service.Service.GetUserByUsernameAndPsw(currentUser.username, currentUser.password);
                 if (currentUser == null)
                 {
                     MessageBox.Show("Invalid username or password.Try again");
+                    currentUser = new tblUser();
                 }
                 else
                 {
